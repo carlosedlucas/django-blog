@@ -1,0 +1,26 @@
+{% extends 'admin/base.html' %}
+{% load static %}
+
+{% block extrahead %}
+    <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.png' %}"/>
+{% endblock %}
+
+{% block branding %}
+    {% if not user.is_authenticated %}
+    <p style="text-align:center">Login: Teste </p>
+    <p style="text-align:center">Senha: 123456xyz </p>
+    <h1 id="head">
+        <img src="{% static 'img/logo.png' %}"
+             style="width:50px; height: 50px; margin-right: 10px;"> Carlos Eduardo Lucas
+    </h1>
+    {% else %}
+    <h1 id="head">
+        <img src="{% static 'img/logo.png' %}"
+             style="width:50px; height: 50px; margin-right: 10px;"> Carlos Eduardo Lucas
+    </h1>
+    {% endif %}
+{% endblock %}
+
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+{% endblock %}

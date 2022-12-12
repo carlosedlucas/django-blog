@@ -1,0 +1,186 @@
+VSCODE
+
+########################################
+CRIANDO AMBIENTE VIRTUAL E ATIVANDO 
+(https://docs.python.org/pt-br/3/tutorial/venv.html#creating-virtual-environments)
+
+TERMINAL -> python3 -m venv venv
+TERMINAL -> . venv/bin/activate
+########################################
+
+########################################
+INSTALANDO DJANGO 
+(https://docs.djangoproject.com/pt-br/4.1/faq/install/#what-python-version-can-i-use-with-django)
+(https://docs.djangoproject.com/pt-br/4.1/topics/install/#installing-official-release)
+
+TERMINAL -> pip install django==2.2.3
+########################################
+
+########################################
+INICIANDO PROJETO DJANGO 
+(https://docs.djangoproject.com/pt-br/4.1/ref/django-admin/#startproject)
+
+TERMINAL -> django-admin startproject <nomeprojeto> .
+########################################
+
+########################################
+CRIANDO APP DO PROJETO 
+(https://docs.djangoproject.com/pt-br/4.1/ref/django-admin/#startapp)
+
+TERMINAL -> python3 manage.py startapp <nomeapp>
+########################################
+
+########################################
+REGRISTRANDO APP NO PROJETO 
+(https://docs.djangoproject.com/pt-br/4.1/intro/tutorial02/#activating-models)
+
+PASTA -> <nomedoprojeto>. ARQUIVO -> settings.py, registrar o app em INSTALLED_APPS:
+
+"""
+...........CÓDIGO OCULTADO...........
+
+INSTALLED_APPS = [
+	...........CÓDIGO OCULTADO...........
+	'<nomeapp>.apps.<Nomeapp>Config',
+]
+
+...........CÓDIGO OCULTADO...........
+"""
+########################################
+
+########################################
+INSERINDO CAMINHO PARA URL DO APP CONTATOS 
+(https://docs.djangoproject.com/pt-br/4.1/intro/tutorial01/#write-your-first-view)
+
+PASTA -> <nomedoprojeto>. ARQUIVO -> urls.py, importar include e colocar o caminho das urls do app contatos:
+
+""""
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('', include('contatos.urls')),
+    path('admin/', admin.site.urls),
+]
+""""
+########################################
+
+########################################
+INSERINDO CAMINHO PARA URLS DERIVADAS DO APP CONTATOS 
+(https://docs.djangoproject.com/pt-br/4.1/intro/tutorial01/#write-your-first-view)
+
+PASTA -> <nomeapp>, criar arquivo urls.py e colocar o seguinte código:
+
+"""
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.index, name='index'),    
+]
+"""
+########################################
+
+########################################
+INSERIR A FUNÇÃO QUE RETORNA A RENDERIZAÇÃO DO ARQUIVO INDEX.HTML
+(https://docs.djangoproject.com/pt-br/4.1/intro/tutorial01/#write-your-first-view)
+
+PASTA -> <nomeapp>. ARQUIVO -> views.py, colocar a função abaixo para renderizar o arquivo index.html:
+
+"""
+from django.shortcuts import render
+
+def index(request):
+    return render(request, 'paginas/index.html')
+"""
+########################################
+
+########################################
+CRIAR TEMPLATES DO APP 
+(https://docs.djangoproject.com/pt-br/4.1/topics/templates/)
+
+PASTA -> <nomeapp>, criar pasta templates
+PASTAS -> <nomeapp>/templates, criar pasta <nomeapp>, será a pasta onde o app vai procurar os arquivos html
+PASTAS -> <nomeapp>/templates/<nomeapp>, criar arquivo index.html
+PASTAS -> <nomeapp>/templates/<nomeapp>. ARQUIVO -> index.html, digitar index
+########################################
+
+########################################
+CRIANDO ARQUIVOS ESTATICOS 
+(https://docs.djangoproject.com/pt-br/4.1/howto/static-files/#how-to-manage-static-files-e-g-images-javascript-css)
+
+PASTA -> untitled (na raiz do projeto), criar pasta templates
+PASTA -> templates, criar arquivo base.html
+PASTA -> template_agenda (baixada na última aula). ARQUIVO -> index.html, copiar todo conteúdo e inserir dentro de base.html (criado anteriormente)
+PASTA -> templates, criar pasta static
+PASTAS -> templates/static, mover aqui a pasta vendor (baixada na última aula)
+PASTA -> templates. ARQUIVO -> base.html, <!-- Navigation -->, class="navbar-brand", inserir dentro de  href o código "{% url 'index' %}"
+O código anterior vai ser a referência de name='index' do arquivo urls.py da pasta do app
+PASTA -> templates. ARQUIVO -> base.html, digitar no inicio do arquivo {% load static %}
+PASTA -> templates. ARQUIVO -> base.html, digitar {% static 'vendor/código_ocultado/código_ocultado...' %} nas referências do 'vendor/bootstrap...'
+PASTA -> templates. ARQUIVO -> base.html, <!-- Page Content -->, recortar de <h1> até o final de <table>
+PASTA -> templates. ARQUIVO -> base.html, no lugar onde recortou o código anteriormente, digitar o código {% block 'conteudo' %}{% endblock %} 
+PASTAS -> <nomeapp>/templates/contatos. ARQUIVO -> index.html, digitar o código {% extends 'base.html' %} {% block 'conteudo' %}COLAR CÓDIGO RECORTADO ANTERIORMENTE AQUI{% endblock %}
+########################################
+
+########################################
+CRIANDO ARQUIVOS PARCIAIS
+(https://docs.djangoproject.com/pt-br/4.1/ref/templates/language/#template-inheritance)
+
+PASTAS -> untitled (na raiz do projeto)/templates, criar pasta parciais
+PASTAS -> templates/parciais, criar arquivos _head.html e _nav.html
+PASTA -> templates. ARQUIVO -> base.html, mover para cima <title>Agenda</title>, recortar conteúdo do head e colocar no lugar {% include 'parciais/_head.html' %}
+PASTAS -> templates/parciais. ARQUIVO -> _head.html, mover conteúdo recortado anteriormente para dentro do arquivo e colocar {% load static %} no topo
+PASTA -> templates. ARQUIVO -> base.html, recortar conteúdo do navigation e colocar no lugar {% include 'parciais/_head.html' %}
+PASTAS -> templates/parciais. ARQUIVO -> _nav.html, mover conteúdo recortado anteriormente para dentro do arquivo e colocar {% load static %} no topo
+########################################
+
+########################################
+CONFIGURANDO TEMPLATES DO PROJETO 
+(https://docs.djangoproject.com/pt-br/4.1/ref/settings/#dirs)
+
+PASTA -> <nomeprojeto>. ARQUIVO -> settings.py, abaixo do comando STATIC_URL = '/static/' e registar a pasta estática:
+
+"""
+...........CÓDIGO OCULTADO...........
+
+TEMPLATES = [
+	{	
+		...........CÓDIGO OCULTADO...........
+		'DIRS': [os.path.join(BASE_DIR, 'templates')],
+]
+"""
+########################################
+
+########################################
+CONFIGURANDO ARQUIVOS ESTATICOS 
+(https://docs.djangoproject.com/pt-br/4.1/ref/settings/#staticfiles-dirs)
+
+PASTA -> <nomeprojeto>. ARQUIVO -> settings.py, abaixo do comando STATIC_URL = '/static/' e registar a pasta estática:
+
+"""
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'templates/static')
+]
+"""
+########################################
+
+
+########################################
+TESTANDO O FUNCIONAMENTO DO PROJETO
+(https://docs.djangoproject.com/en/4.1/ref/django-admin/#django-admin-and-manage-py)
+
+python3 manage.py runserver
+########################################
+
+
+
+
+
+
+
+
+
+
+
+
