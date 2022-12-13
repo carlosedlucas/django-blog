@@ -25,7 +25,7 @@ SECRET_KEY = '%jrx4-wn7n2*z&8brp=2-tq^$t76=86)w#j=w$ifo&d^)^#*2t'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['blogcursopython.otaviomiranda.com.br']
+ALLOWED_HOSTS = ['djangoblog.carlosedlucas.dev']
 
 
 # Application definition
