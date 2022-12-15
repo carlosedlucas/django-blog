@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
+from django.contrib.messages import constants
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'axes',
 ]
 
 MIDDLEWARE = [
@@ -51,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'axes.middleware.AxesMiddleware',
 ]
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
@@ -134,7 +137,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-from django.contrib.messages import constants
 
 MESSAGE_TAGS = {
     constants.ERROR: 'alert-danger',
@@ -151,10 +153,16 @@ SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
+AUTHENTICATION_BACKENDS = [
+    # AxesStandaloneBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
+    'axes.backends.AxesBackend',
+
+    # Django ModelBackend is the default authentication backend.
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+
 try:
     from .local_settings import *
 except:
     pass
-
-
-
