@@ -11,7 +11,7 @@ class FormComentario(ModelForm):
         recaptcha_request = requests.post(
             'https://www.google.com/recaptcha/api/siteverify',
             data={
-                'secret': '6Le0yoIjAAAAALhGB8J1ukLi2EhuZH5nl_kd4BCz',
+                'secret': 'DESCUBRA',
                 'response': recaptcha_response
             },
             timeout=10
