@@ -1,6 +1,7 @@
 from django.forms import ModelForm
 from .models import Comentario
 from django.forms.widgets import TextInput, EmailInput, Textarea
+from django.conf import settings
 import requests
 
 
@@ -11,13 +12,14 @@ class FormComentario(ModelForm):
         recaptcha_request = requests.post(
             'https://www.google.com/recaptcha/api/siteverify',
             data={
-                'secret': 'DESCUBRA',
+                'secret': settings.RECAPTCHA_PRIVATE_KEY,
                 'response': recaptcha_response
             },
             timeout=10
         )
         recaptcha_result = recaptcha_request.json()
 
+        print(settings.RECAPTCHA_PRIVATE_KEY)
         print(recaptcha_result)
         print(recaptcha_result.get('success'))
 

@@ -75,7 +75,7 @@
             </div>
             {% endfor %}
 
-            <div class="g-recaptcha" data-sitekey="DESCUBRA"></div>
+            <div class="g-recaptcha" data-sitekey="{{ settings.RECAPTCHA_PUBLIC_KEY }}"></div>
             <br/>
 
             {% include 'parciais/_messages.html' %}

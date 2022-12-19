@@ -67,6 +67,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django_settings_export.settings_export',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -152,6 +153,14 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
+
+RECAPTCHA_PUBLIC_KEY = 'DESCUBRA'
+RECAPTCHA_PRIVATE_KEY = 'DESCUBRA'
+
+SETTINGS_EXPORT = [
+    'RECAPTCHA_PUBLIC_KEY',
+    'RECAPTCHA_PRIVATE_KEY',
+]
 
 AUTHENTICATION_BACKENDS = [
     # AxesStandaloneBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
